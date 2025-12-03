@@ -1,6 +1,6 @@
 -- 1. feladat
 delimiter //
-drop function if exists orszagkod;
+drop function if exists orszagkod//
 create function orszagkod(_country_name varchar(40))
 returns varchar(2)
 reads sql data
@@ -72,4 +72,5 @@ delimiter ;
 -- select email(first_name, last_name) from employees;
 
 -- 5. feladat
-select first_name, last_name, employee_id, email from employees;
+select first_name, last_name, employee_id, email(first_name, last_name) from employees;
+update employees set `email` = email(FIRST_NAME, LAST_NAME);
