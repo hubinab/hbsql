@@ -14,11 +14,11 @@ delimiter ;
 
 -- 2. feladat
 create or replace view dolgozodb 
-as select d.department_name, count(*) as db
+as select j.JOB_TITLE as munkakor, count(*) as db
 from employees e 
-join departments d on e.department_id = d.department_id 
-group by d.department_id 
-order by d.department_name;
+join jobs j on e.JOB_ID = j.JOB_ID
+group by j.JOB_ID
+order by j.JOB_TITLE;
 
 -- 3. feladat
 delimiter //
@@ -28,13 +28,13 @@ reads sql data
 begin
     set @min = 0;
     set @max = 0;
-    select department_name 
+    select munkakor 
     into @min
     from dolgozodb order by db limit 1;
-    select department_name 
+    select munkakor 
     into @max
     from dolgozodb order by db desc limit 1;
-    select @min legkevesebben, @max legtobben from dual;
+    select @min legkevesebben, @max legtobben;
 end//
 delimiter ;
 
