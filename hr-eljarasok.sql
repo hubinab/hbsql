@@ -64,25 +64,21 @@ delimiter ;
 
 -- 5. feladat
 delimiter //
-drop procedure emeles//
-create procedure emeles(_kor int, _department_id decimal(4, 0), _percent int)
+drop procedure if exists emeles//
+create procedure if not exists emeles(_kor int, _department_id decimal(4, 0), _percent int)
 modifies sql data
 begin
     update employees e  
-    join departments d on d.department_id = e.department_id 
-    join locations l on l.location_id = d.location_id 
     set e.salary=e.salary * ((100+_percent)/100)
     where TIMESTAMPDIFF(YEAR, e.hire_date, CURDATE()) > _kor
-    and d.department_id = _department_id;
+    and e.department_id = _department_id;
 end//
 delimiter ;
 
--- select d.department_id, concat(e.first_name, " ", e.last_name) Nev, 
+-- select e.department_id, concat(e.first_name, " ", e.last_name) Nev, 
 --     e.salary, TIMESTAMPDIFF(YEAR, e.hire_date, CURDATE()) as "Eve dolgozik"  
---     from employees e 
---     join departments d on d.department_id = e.department_id 
---     join locations l on l.location_id = d.location_id 
---     where l.city = "Munich" and d.department_name = "Public Relations";
+--     from employees e
+--     where e.DEPARTMENT_ID = 70;
 -- +---------------+--------------+----------+--------------+
 -- | department_id | Nev          | salary   | Eve dolgozik |
 -- +---------------+--------------+----------+--------------+
