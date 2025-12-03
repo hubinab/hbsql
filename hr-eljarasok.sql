@@ -39,26 +39,28 @@ end//
 delimiter ;
 
 -- 4. feladat
-delimiter //
+ddelimiter //
 drop procedure emel1000//
-create procedure emel1000(_city varchar(30), _department_name varchar(30))
+create procedure emel1000(_city varchar(30), _job_title varchar(35))
 modifies sql data
 begin
--- select l.city, d.department_name, concat(e.first_name, " ", e.last_name), e.salary 
+-- select l.city, j.job_title, concat(e.first_name, " ", e.last_name), e.salary 
 -- from employees e 
 -- join departments d on d.department_id = e.department_id 
--- join locations l on l.location_id = d.location_id 
--- where l.city = "Munich" 
--- and d.department_name = "Public Relations";
+-- join locations l on l.location_id = d.location_id
+-- join jobs j on j.job_id = e.job_id
+-- where l.city = 'South San Francisco'
+-- and j.job_title = 'Stock Manager';
     update employees e  
-    join departments d on d.department_id = e.department_id 
-    join locations l on l.location_id = d.location_id 
+	join departments d on d.department_id = e.department_id 
+	join locations l on l.location_id = d.location_id
+	join jobs j on j.job_id = e.job_id
     set e.salary=e.salary + 1000
     where l.city = _city
-    and d.department_name = _department_name;
+    and j.JOB_TITLE = _job_title;
 end//
 delimiter ;
--- call emel1000("Munich", "Public Relations");
+-- call emel1000('South San Francisco', 'Stock Manager');
 
 -- 5. feladat
 delimiter //
