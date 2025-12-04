@@ -2,7 +2,7 @@
 
 -- 2. feladat
 drop database if exists jatekok;
-create database if not exists jatekok character set utf8mb4;
+create database if not exists jatekok character set utf8mb4 collate utf8mb4_hungarian_ci;
 
 -- 3. feladat
 
